@@ -1,4 +1,3 @@
-
 const translations = {
     en: {
         main_page: "Main Page",
@@ -41,9 +40,7 @@ const translations = {
         placeholder_alt: "صورة مؤقتة لفرع NOC التونسي"
     }
 };
-
 let currentLanguage = localStorage.getItem('currentLanguage') || 'en'; // Get language from local storage, default to 'en'
-
 // Function to update the text based on the current language
 function updateText() {
     // Update all translatable elements
@@ -53,16 +50,13 @@ function updateText() {
             element.textContent = translations[currentLanguage][key];
         }
     });
-    
     // Update body direction based on language
     document.body.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
-    
     // Update title tag
     document.title = currentLanguage === 'ar' ? 
         "فرع NOC التونسي" : 
         "NOC Tunisian Chapter";
 }
-
 // Function to create and display the language selection modal
 function showLanguageModal() {
     // Remove existing modal if any
@@ -70,19 +64,15 @@ function showLanguageModal() {
     if (existingModal) {
         existingModal.remove();
     }
-
     const modal = document.createElement('div');
     modal.id = 'language-modal';
     modal.classList.add('language-modal');
-
     const modalContent = document.createElement('div');
     modalContent.classList.add('language-modal-content');
-
     const title = document.createElement('h3');
     title.classList.add('translatable');
     title.dataset.key = 'select_language';
     title.textContent = translations[currentLanguage]['select_language'];
-
     const englishOption = document.createElement('button');
     englishOption.classList.add('language-option');
     englishOption.textContent = translations[currentLanguage]['english'];
@@ -90,7 +80,6 @@ function showLanguageModal() {
         setLanguage('en');
         modal.remove();
     });
-
     const arabicOption = document.createElement('button');
     arabicOption.classList.add('language-option');
     arabicOption.textContent = translations[currentLanguage]['arabic'];
@@ -98,13 +87,11 @@ function showLanguageModal() {
         setLanguage('ar');
         modal.remove();
     });
-
     modalContent.appendChild(title);
     modalContent.appendChild(englishOption);
     modalContent.appendChild(arabicOption);
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
-
     // Close modal when clicking outside
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
@@ -112,34 +99,28 @@ function showLanguageModal() {
         }
     });
 }
-
 // Function to set the language
 function setLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('currentLanguage', lang); // Save language preference
     updateText();
 }
-
 // Add click event listeners to the windows
 document.querySelectorAll('.window').forEach(windowElement => {
     windowElement.addEventListener('click', function(event) {
         const key = this.dataset.key; // Gets from parent div
-        
         if (key === 'language') {
             showLanguageModal();
             return;
         }
-        
         alert(translations[currentLanguage]['under_development']);
         event.preventDefault();
     });
 });
-
 // Initial setup when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     updateText(); // Update text based on potentially loaded language
 });
-
 // Service Worker registration
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
