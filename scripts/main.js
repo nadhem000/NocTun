@@ -71,13 +71,13 @@ function showLanguageModal() {
     modalContent.classList.add('language-modal-content');
 
     const title = document.createElement('h3');
-    // Set the text for the title directly based on the current language
-    title.textContent = translations[currentLanguage]['select_language'];
+    title.classList.add('translatable');
+    title.dataset.key = 'select_language';
+    title.textContent = translations[currentLanguage]['select_language']; // Initial text
 
     const englishOption = document.createElement('button');
     englishOption.classList.add('language-option');
-    // Set the text for English option directly based on the current language
-    englishOption.textContent = translations[currentLanguage]['english'];
+    englishOption.textContent = translations[currentLanguage]['english']; // Initial text for English
     englishOption.addEventListener('click', () => {
         setLanguage('en');
         modal.remove();
@@ -85,8 +85,7 @@ function showLanguageModal() {
 
     const arabicOption = document.createElement('button');
     arabicOption.classList.add('language-option');
-    // Set the text for Arabic option directly based on the current language
-    arabicOption.textContent = translations[currentLanguage]['arabic'];
+    arabicOption.textContent = translations[currentLanguage]['arabic']; // Initial text for Arabic
     arabicOption.addEventListener('click', () => {
         setLanguage('ar');
         modal.remove();
@@ -97,6 +96,9 @@ function showLanguageModal() {
     modalContent.appendChild(arabicOption);
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
+
+    // Update text within the modal after appending (important for initial display)
+    updateText();
 
     // Close modal when clicking outside
     modal.addEventListener('click', (event) => {

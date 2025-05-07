@@ -181,3 +181,19 @@ body[dir="rtl"] .window .hover-content {
     right: 50%; /* Position from the right */
     transform: translateX(50%); /* Center horizontally using transform */
 }
+
+.image-placeholder {
+    padding: 20px;
+    text-align: center;
+    background-color: #f0f0f0;
+    margin: 20px 0;
+}
+
+.image-placeholder img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    background: white;
+}
