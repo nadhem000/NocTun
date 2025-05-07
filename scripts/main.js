@@ -17,7 +17,8 @@ const translations = {
         under_development: "Under Development",
         select_language: "Select Language",
         english: "English",
-        arabic: "Arabic"
+        arabic: "Arabic",
+        placeholder_alt: "Placeholder image for NOC Tunisian Chapter"
     },
     ar: {
         main_page: "الصفحة الرئيسية",
@@ -36,7 +37,8 @@ const translations = {
         under_development: "قيد التطوير",
         select_language: "اختر اللغة",
         english: "الإنجليزية",
-        arabic: "العربية"
+        arabic: "العربية",
+        placeholder_alt: "صورة مؤقتة لفرع NOC التونسي"
     }
 };
 
@@ -44,15 +46,21 @@ let currentLanguage = localStorage.getItem('currentLanguage') || 'en'; // Get la
 
 // Function to update the text based on the current language
 function updateText() {
+    // Update all translatable elements
     document.querySelectorAll('.translatable').forEach(element => {
         const key = element.dataset.key;
         if (key && translations[currentLanguage] && translations[currentLanguage][key]) {
             element.textContent = translations[currentLanguage][key];
         }
     });
-
+    
     // Update body direction based on language
     document.body.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+    
+    // Update title tag
+    document.title = currentLanguage === 'ar' ? 
+        "فرع NOC التونسي" : 
+        "NOC Tunisian Chapter";
 }
 
 // Function to create and display the language selection modal
@@ -73,11 +81,11 @@ function showLanguageModal() {
     const title = document.createElement('h3');
     title.classList.add('translatable');
     title.dataset.key = 'select_language';
-    title.textContent = translations[currentLanguage]['select_language']; // Initial text
+    title.textContent = translations[currentLanguage]['select_language'];
 
     const englishOption = document.createElement('button');
     englishOption.classList.add('language-option');
-    englishOption.textContent = translations[currentLanguage]['english']; // Initial text for English
+    englishOption.textContent = translations[currentLanguage]['english'];
     englishOption.addEventListener('click', () => {
         setLanguage('en');
         modal.remove();
@@ -85,7 +93,7 @@ function showLanguageModal() {
 
     const arabicOption = document.createElement('button');
     arabicOption.classList.add('language-option');
-    arabicOption.textContent = translations[currentLanguage]['arabic']; // Initial text for Arabic
+    arabicOption.textContent = translations[currentLanguage]['arabic'];
     arabicOption.addEventListener('click', () => {
         setLanguage('ar');
         modal.remove();
@@ -97,12 +105,9 @@ function showLanguageModal() {
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
 
-    // Update text within the modal after appending (important for initial display)
-    updateText();
-
     // Close modal when clicking outside
-    modal.addEventListener('click', (event) => {
-        if (event.target === modal) {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
             modal.remove();
         }
     });
@@ -121,6 +126,7 @@ document.querySelectorAll('.window').forEach(windowElement => {
         const key = windowElement.dataset.key;
         if (key === 'language') {
             showLanguageModal();
+            event.stopPropagation(); // Prevent event from bubbling up
         } else {
             // Show "Under Development" for other windows
             alert(translations[currentLanguage]['under_development']);
@@ -134,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateText(); // Update text based on potentially loaded language
 });
 
-// Service Worker registration (keep this)
+// Service Worker registration
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
