@@ -3,11 +3,11 @@
   "short_name": "NOCTun",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",  // Often white for a clean look, adjust as needed
+  "background_color": "#ffffff",  // Often white for a clean look
   "theme_color": "#0056b3",      // A shade of blue often associated with professional organizations, adjust to match branding
   "icons": [
     {
-      "src": "assets/icons/noc-logo-512x512.png",  // Assuming you have a 512x512 logo
+      "src": "assets/icons/noc-logo-512x512.png",  //  a 512x512 logo
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
