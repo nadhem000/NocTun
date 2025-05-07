@@ -1,0 +1,99 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+.header .window {
+    padding: 10px 20px;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    flex-grow: 1; /* Allow windows to grow and fill space */
+    min-width: 120px; /* Minimum width to prevent squishing */
+}
+
+.header .window:hover {
+    background-color: #555;
+}
+
+.hover-content {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    display: none;
+    z-index: 10;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.window:hover .hover-content {
+    display: block;
+}
+
+.presentation {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.middle-windows {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+.middle-windows .window {
+    width: 30%; /* Base width for larger screens */
+    background-color: #ddd;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+    margin-bottom: 20px; /* Add space between windows on smaller screens */
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column; /* Stack header windows vertically on smaller screens */
+        align-items: center; /* Center header windows */
+    }
+
+    .header .window {
+        width: 100%; /* Make header windows full width */
+        margin-bottom: 5px; /* Add space between header windows */
+    }
+
+    .middle-windows {
+        flex-direction: column; /* Stack middle windows vertically */
+        align-items: center; /* Center middle windows */
+    }
+
+    .middle-windows .window {
+        width: 80%; /* Make middle windows wider on smaller screens */
+    }
+}
