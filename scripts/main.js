@@ -8,11 +8,11 @@ const translations = {
         contact_us: "Contact Us",
         language: "Language",
         presentation_title: "Presentation of NOC Tunisian Chapter",
-        presentation_text: "This is a placeholder for the presentation of the NOC Tunisian Chapter. You can add information here about the chapter's mission, goals, activities, etc.",
+        presentation_text: "The IAU National Outreach Committee (NOC) - Tunisia is a scientific outreach initiative under the International Astronomical Union, dedicated to promoting astronomy across Tunisia through public engagement, education, and research. We organize stargazing events, school workshops, and astronomy lectures to inspire students and the general public while supporting amateur and professional astronomers. Our past achievements include nationwide astronomy campaigns and teacher training programs, and we aim to expand access to astronomy in rural areas and establish Tunisia’s first public observatory. Join us in exploring the universe!",
         library: "Library",
         videos: "Videos",
         calendar: "Calendar",
-        developer: "Developer: [Name/Organization]",
+        developer: "Developer: Mejri Ziad",
         version: "Version: 1.0",
         under_development: "Under Development",
         select_language: "Select Language",
@@ -28,11 +28,11 @@ const translations = {
         contact_us: "اتصل بنا",
         language: "اللغة",
         presentation_title: "تقديم فرع NOC التونسي",
-        presentation_text: "هذا مكان لوصف تقديم فرع NOC التونسي. يمكنك إضافة معلومات هنا حول مهمة الفرع وأهدافه وأنشطته وما إلى ذلك.",
+        presentation_text: "اللجنة الوطنية لنشر الفلك (NOC) - تونس هي مبادرة علمية تابعة للاتحاد الفلكي الدولي تهدف إلى نشر علم الفلك في تونس عبر الفعاليات العامة، البرامج التعليمية، والأبحاث. ننظم أنشطة مثل رصد النجوم، ورش عمل مدرسية، ومحاضرات لتشجيع الطلاب والجمهور على الاهتمام بالعلوم الفلكية، مع دعم الفلكيين الهواة والمحترفين. من بين إنجازاتنا حملات وطنية لرصد الأجرام السماوية وتدريب المعلمين، ونسعى مستقبلاً إلى التوسع في المناطق الريفية وإنشاء أول مرصد فلكي عمومي في تونس. انضم إلينا لاكتشاف الكون!",
         library: "المكتبة",
         videos: "مقاطع الفيديو",
         calendar: "التقويم",
-        developer: "المطور: [اسمك/منظمتك]",
+        developer: "المطور: زياد الماجري",
         version: "الإصدار: 1.0",
         under_development: "قيد التطوير",
         select_language: "اختر اللغة",
@@ -122,15 +122,15 @@ function setLanguage(lang) {
 
 // Add click event listeners to the windows
 document.querySelectorAll('.window').forEach(windowElement => {
-    windowElement.addEventListener('click', (event) => {
-        const key = windowElement.dataset.key;
+    windowElement.addEventListener('click', function(event) {
+        const key = this.dataset.key; // Gets from parent div
+        
         if (key === 'language') {
             showLanguageModal();
-            event.stopPropagation(); // Prevent event from bubbling up
-        } else {
-            // Show "Under Development" for other windows
-            alert(translations[currentLanguage]['under_development']);
+            return;
         }
+        
+        alert(translations[currentLanguage]['under_development']);
         event.preventDefault();
     });
 });
