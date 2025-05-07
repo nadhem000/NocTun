@@ -5,6 +5,7 @@ const ASSETS = [
     '/index.html',
     '/offline.html',
     '/styles/main.css',
+    '/manifest.json',
     '/scripts/main.js',
     '/assets/images/placeholder.jpg',
     // Only cache essential assets
