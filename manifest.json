@@ -2,18 +2,12 @@
 	"name": "NOC Tunisian Chapter",
 	"short_name": "NOCTun",
 	"id": "NOCTun",
-	"description": "موقع الفرع التونسي للاتحاد الفلكي العالمي. نزل التطبيق لتبقى  على اطلاع.",
 	"start_url": "/",
+	"description": "موقع الفرع التونسي للاتحاد الفلكي العالمي. نزل التطبيق لتبقى  على اطلاع.",
 	"display": "standalone",
-	"background_color": "#ffffff",
-	"theme_color": "#0056b3",
+	"background_color": "#ffffff",  // Often white for a clean look
+	"theme_color": "#0056b3",      // A shade of blue often associated with professional organizations
 	"orientation": "portrait",
-	"categories": ["games", "education", "kids"],
-	"dir": "auto",
-	"iarc_rating_id": "e58c174a-81d2-5c3c-32cc-34b8de4a52e9",
-	"lang": "ar",
-	"prefer_related_applications": false,
-	"scope": "/",
 	"edge_side_panel": {
 		"preferred_width": 400
 	},
@@ -25,6 +19,12 @@
 	"launch_handler": {
 		"client_mode": "auto"
 	},
+	"categories": ["games", "education", "kids"],
+	"dir": "auto",
+	"iarc_rating_id": "e58c174a-81d2-5c3c-32cc-34b8de4a52e9",
+	"lang": "ar",
+	"prefer_related_applications": false,×
+	"scope": "/",
 	"icons": [
 		{
 			"src": "assets/icons/noc-logo-512x512.png",
@@ -57,6 +57,51 @@
 			"sizes": "512×512",
 			"type": "image/png",
 			"platform": "wide"
+		}
+	],
+	"file_handlers": [
+		{
+			"action": "/open-pdf",
+			"accept": {
+				"application/pdf": [".pdf"]
+			},
+			"icons": [
+				{
+					"src": "assets/icons/pdf-icon-256x256.png",
+					"sizes": "256x256",
+					"type": "image/png"
+				}
+			],
+			"launch_type": "single-client"
+		},
+		{
+			"action": "/view-image",
+			"accept": {
+				"image/*": [".jpg", ".jpeg", ".png", ".gif", ".webp"]
+			},
+			"icons": [
+				{
+					"src": "assets/icons/image-icon-256x256.png",
+					"sizes": "256x256",
+					"type": "image/png"
+				}
+			],
+			"launch_type": "multiple-clients"
+		},
+		{
+			"action": "/play-video",
+			"accept": {
+				"video/*": [".mp4", ".webm", ".ogg"],
+				"application/x-mpegURL": [".m3u8"]
+			},
+			"icons": [
+				{
+					"src": "assets/icons/video-icon-256x256.png",
+					"sizes": "256x256",
+					"type": "image/png"
+				}
+			],
+			"launch_type": "single-client"
 		}
 	]
 }
