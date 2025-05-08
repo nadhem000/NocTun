@@ -42,19 +42,19 @@
 	"screenshots": [
 		{
 			"src": "assets/screenshots/screenshot_01.png",
-			"sizes": "512×512",
+			"sizes": "512x512",
 			"type": "image/png",
 			"platform": "wide"
 		},
 		{
 			"src": "assets/screenshots/screenshot_02.png",
-			"sizes": "512×512",
+			"sizes": "512x512",
 			"type": "image/png",
 			"platform": "wide"
 		},
 		{
 			"src": "assets/screenshots/screenshot_03.png",
-			"sizes": "512×512",
+			"sizes": "512x512",
 			"type": "image/png",
 			"platform": "wide"
 		}
