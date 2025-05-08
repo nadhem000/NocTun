@@ -133,3 +133,14 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
+async function registerPeriodicSync() {
+    if ('periodicSync' in registration) {
+        try {
+            await registration.periodicSync.register('content-refresh', {
+                minInterval: 24 * 60 * 60 * 1000 // 24 hours
+            });
+        } catch (error) {
+            console.log('Periodic sync registration failed:', error);
+        }
+    }
+}

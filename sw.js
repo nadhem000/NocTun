@@ -1,6 +1,6 @@
 const CACHE_NAME = 'noctun-site-v3';
 const OFFLINE_URL = '/offline.html';
-const SYNC_QUEUE = 'media-sync-queue'; // IndexedDB store name for pending syncs
+const SYNC_TAG = 'media-sync';
 const ASSETS = [
     '/',
     '/index.html',
@@ -13,26 +13,30 @@ const ASSETS = [
     '/assets/icons/noc-logo-512x512.png',  // Added for better PWA support
     '/assets/screenshots/screenshot_01.png',
     '/assets/screenshots/screenshot_02.png',
-    '/assets/screenshots/screenshot_03.png'
+    '/assets/screenshots/screenshot_03.png',
+    '/assets/screenshots/pdf-icon-256x256.png',
+    '/assets/screenshots/image-icon-256x256.png',
+    '/assets/screenshots/video-icon-256x256.png',
+    '/assets/pdf/iau_strategy_2030.pdf'  // Add a generic offline PDF placeholder
 ];
 
 // ========================
-// Enhanced Cache Strategies
+// Installation & Activation
 // ========================
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then((cache) => cache.addAll(ASSETS))
+            .then(cache => cache.addAll(ASSETS))
             .then(() => self.skipWaiting())
     );
 });
 
 self.addEventListener('activate', (event) => {
     event.waitUntil(
-        caches.keys().then((cacheNames) => 
+        caches.keys().then(cacheNames => 
             Promise.all(
-                cacheNames.map((cacheName) => 
+                cacheNames.map(cacheName => 
                     cacheName !== CACHE_NAME ? caches.delete(cacheName) : null
                 )
             )
@@ -41,157 +45,165 @@ self.addEventListener('activate', (event) => {
 });
 
 // ========================
-// Background Sync Integration
+// Background Sync Handling
 // ========================
 
-self.addEventListener('sync', (event) => {
-    if (event.tag === 'sync-media') {
+self.addEventListener('sync', event => {
+    if (event.tag === SYNC_TAG) {
         event.waitUntil(
-            processMediaSync()
+            handleBackgroundSync()
                 .catch(error => {
-                    console.error('Sync failed, retrying next sync:', error);
-                    return Promise.reject(error); // Triggers automatic retry
+                    console.error('Sync failed, will retry:', error);
+                    return Promise.reject(error);
                 })
         );
     }
 });
 
-self.addEventListener('periodicsync', (event) => {
-    if (event.tag === 'refresh-content') {
-        event.waitUntil(
-            refreshContent()
-                .then(() => cleanOldMedia())
-        );
-    }
-});
-
-// ========================
-// Sync Processing Functions
-// ========================
-
-async function processMediaSync() {
+async function handleBackgroundSync() {
     const queue = await getSyncQueue();
     for (const item of queue) {
         try {
-            await handleMediaSyncItem(item);
-            await removeFromSyncQueue(item.id);
+            await syncMediaItem(item);
+            await removeFromQueue(item.id);
         } catch (error) {
-            console.error(`Failed to sync item ${item.id}:`, error);
-            throw error; // Retry entire queue on failure
+            console.error(`Failed to sync ${item.type}:`, error);
+            throw error;
         }
     }
 }
 
-async function handleMediaSyncItem(item) {
-    // Customize based on your media handling needs
-    switch (item.type) {
-        case 'photo':
-            return syncPhoto(item);
-        case 'pdf':
-            return syncPDF(item);
-        case 'video':
-            return syncVideo(item);
-        default:
-            throw new Error(`Unknown media type: ${item.type}`);
+// ========================
+// Enhanced Fetch Handling
+// ========================
+
+self.addEventListener('fetch', (event) => {
+    // Handle navigation requests separately
+    if (event.request.mode === 'navigate') {
+        event.respondWith(handleNavigationRequest(event));
+        return;
+    }
+
+    // Handle media requests with cache-first strategy
+    if (isMediaRequest(event.request)) {
+        event.respondWith(handleMediaRequest(event));
+        return;
+    }
+
+    // Default network-first strategy for other assets
+    event.respondWith(networkFirstThenCache(event));
+});
+
+async function handleNavigationRequest(event) {
+    try {
+        const networkResponse = await fetch(event.request);
+        return networkResponse;
+    } catch (error) {
+        const cache = await caches.open(CACHE_NAME);
+        const cachedResponse = await cache.match(OFFLINE_URL);
+        return cachedResponse || Response.error();
     }
 }
 
-async function refreshContent() {
-    // Fetch fresh content and update cache
-    const updatedContent = await fetch('/api/recent-content');
+async function handleMediaRequest(event) {
     const cache = await caches.open(CACHE_NAME);
-    await cache.put('/api/recent-content', updatedContent.clone());
-    return updatedContent;
+    const cachedResponse = await cache.match(event.request);
+    
+    if (cachedResponse) return cachedResponse;
+
+    try {
+        const networkResponse = await fetch(event.request);
+        cache.put(event.request, networkResponse.clone());
+        return networkResponse;
+    } catch (error) {
+        return serveMediaFallback(event.request);
+    }
+}
+
+async function networkFirstThenCache(event) {
+    try {
+        const networkResponse = await fetch(event.request);
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(event.request, networkResponse.clone());
+        return networkResponse;
+    } catch (error) {
+        const cachedResponse = await caches.match(event.request);
+        return cachedResponse || Response.error();
+    }
 }
 
 // ========================
-// Media Type Handlers
+// Offline Support Utilities
 // ========================
 
-async function syncPhoto(item) {
+function isMediaRequest(request) {
+    return /\.(jpg|jpeg|png|pdf|mp4|webm)$/i.test(request.url);
+}
+
+function serveMediaFallback(request) {
+    if (request.url.includes('.pdf')) {
+        return caches.match('/assets/pdf/iau_strategy_2030.pdf');
+    }
+    if (/\.(mp4|webm)$/i.test(request.url)) {
+        return new Response('Video unavailable offline', { 
+            status: 503,
+            headers: {'Content-Type': 'text/plain'}
+        });
+    }
+    return caches.match('/assets/images/placeholder.jpg');
+}
+
+// ========================
+// Sync Queue Management (Stubs - implement with IndexedDB)
+// ========================
+
+async function getSyncQueue() {
+    // Implement with your IndexedDB logic
+    return [];
+}
+
+async function removeFromQueue(id) {
+    // Implement with your IndexedDB logic
+}
+
+async function syncMediaItem(item) {
+    // Implement based on your media type handling
     const formData = new FormData();
-    formData.append('photo', item.file);
-    return fetch('/api/upload-photo', {
+    formData.append('file', item.file);
+    
+    return fetch(`/api/upload-${item.type}`, {
         method: 'POST',
         body: formData
     });
 }
 
-async function syncPDF(item) {
-    return fetch('/api/upload-pdf', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/pdf'},
-        body: item.file
-    });
-}
-
-async function syncVideo(item) {
-    // Implement resumable upload logic if needed
-    return fetch('/api/upload-video', {
-        method: 'POST',
-        body: item.file
-    });
-}
-
 // ========================
-// Queue Management
+// Periodic Content Refresh
 // ========================
 
-async function getSyncQueue() {
-    // Implement IndexedDB access for your queue
-    return []; // Return queued items from database
-}
-
-async function removeFromSyncQueue(id) {
-    // Implement IndexedDB removal
-}
-
-// ========================
-// Enhanced Fetch Handler
-// ========================
-
-self.addEventListener('fetch', (event) => {
-    // Media-specific cache handling
-    if (isMediaRequest(event.request)) {
-        handleMediaFetch(event);
-    } else {
-        handleStandardFetch(event);
+self.addEventListener('periodicsync', event => {
+    if (event.tag === 'content-refresh') {
+        event.waitUntil(refreshContent());
     }
 });
 
-function handleMediaFetch(event) {
-    event.respondWith(
-        caches.match(event.request)
-            .then(cached => cached || fetchWithNetworkFallback(event))
-    );
-}
-
-async function fetchWithNetworkFallback(event) {
+async function refreshContent() {
     try {
-        const response = await fetch(event.request);
+        const [pages, translations] = await Promise.all([
+            fetch('/api/updated-pages'),
+            fetch('/api/translations')
+        ]);
+        
         const cache = await caches.open(CACHE_NAME);
-        await cache.put(event.request, response.clone());
-        return response;
+        await Promise.all([
+            cache.put('/api/updated-pages', pages.clone()),
+            cache.put('/api/translations', translations.clone())
+        ]);
+        
+        return clients.matchAll().then(clients => {
+            clients.forEach(client => client.postMessage({type: 'content-updated'}));
+        });
     } catch (error) {
-        return handleMediaOffline(event.request);
+        console.error('Periodic sync failed:', error);
     }
-}
-
-function handleMediaOffline(request) {
-    if (request.url.includes('.jpg')) return caches.match('/assets/images/placeholder.jpg');
-    if (request.url.includes('.pdf')) return caches.match('/assets/offline.pdf');
-    return new Response('Offline', {status: 503});
-}
-
-function isMediaRequest(request) {
-    return request.url.match(/\.(jpg|jpeg|png|pdf|mp4)$/i);
-}
-
-// ========================
-// Maintenance Tasks
-// ========================
-
-async function cleanOldMedia() {
-    // Implement logic to remove old cached media
-    // Example: Keep only last 50 media items
 }

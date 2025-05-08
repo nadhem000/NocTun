@@ -5,8 +5,8 @@
 	"start_url": "/",
 	"description": "موقع الفرع التونسي للاتحاد الفلكي العالمي. نزل التطبيق لتبقى  على اطلاع.",
 	"display": "standalone",
-	"background_color": "#ffffff",
-	"theme_color": "#0056b3",
+	"background_color": "#ffffff",  // Often white for a clean look
+	"theme_color": "#0056b3",      // A shade of blue often associated with professional organizations
 	"orientation": "portrait",
 	"edge_side_panel": {
 		"preferred_width": 400
