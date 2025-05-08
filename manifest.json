@@ -1,22 +1,61 @@
 {
-  "name": "NOC Tunisian Chapter",
-  "short_name": "NOCTun",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",  // Often white for a clean look
-  "theme_color": "#0056b3",      // A shade of blue often associated with professional organizations, adjust to match branding
-  "icons": [
-    {
-      "src": "assets/icons/noc-logo-512x512.png",  //  a 512x512 logo
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "assets/icons/noc-logo-192x192.png",  // Recommended for Android
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ]
+	"name": "NOC Tunisian Chapter",
+	"short_name": "NOCTun",
+	"id": "NOCTun",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#ffffff",  // Often white for a clean look
+	"theme_color": "#0056b3",      // A shade of blue often associated with professional organizations, adjust to match branding
+	"orientation": "portrait",
+	"edge_side_panel": {
+		"preferred_width": 400
+	},
+	"display_override": [
+		"window-controls-overlay",
+		"standalone",
+		"browser"
+	],
+	"launch_handler": {
+		"client_mode": "auto"
+	},
+	"screenshots": [
+		{
+			"src": "assets/screenshots/screenshot_01.png",
+			"sizes": "851x361",
+			"type": "image/png",
+			"platform": "wide"
+		},
+		{
+			"src": "assets/screenshots/screenshot_02.png",
+			"sizes": "858x361",
+			"type": "image/png",
+			"platform": "wide"
+		},
+		{
+			"src": "assets/screenshots/screenshot_03.png",
+			"sizes": "652x531",
+			"type": "image/png",
+			"platform": "wide"
+		}
+	],
+	"categories": ["games", "education", "kids"],
+	"dir": "auto",
+	"iarc_rating_id": "e58c174a-81d2-5c3c-32cc-34b8de4a52e9",
+	"lang": "ar",
+	"prefer_related_applications": false,
+	"scope": "/",
+	"icons": [
+		{
+			"src": "assets/icons/noc-logo-512x512.png",  //  a 512x512 logo
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/icons/noc-logo-192x192.png",  // Recommended for Android
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	]
 }
