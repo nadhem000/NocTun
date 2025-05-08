@@ -9,7 +9,10 @@ const ASSETS = [
     '/manifest.json',
     '/assets/images/placeholder.jpg',
     '/assets/icons/noc-logo-192x192.png',
-    '/assets/icons/noc-logo-512x512.png'  // Added for better PWA support
+    '/assets/icons/noc-logo-512x512.png',  // Added for better PWA support
+    '/assets/screenshots/screenshot_01.png',
+    '/assets/screenshots/screenshot_02.png',
+    '/assets/screenshots/screenshot_03.png'
 ];
 
 // Install Service Worker
