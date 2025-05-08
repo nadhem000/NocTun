@@ -3,7 +3,7 @@ const OFFLINE_URL = '/offline.html';
 const ASSETS = [
     '/',
     '/index.html',
-    OFFLINE_URL,
+    '/offline.html',
     '/styles/main.css',
     '/scripts/main.js',
     '/manifest.json',
