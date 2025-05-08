@@ -206,3 +206,58 @@ body[dir="rtl"] .window .hover-content {
   display: none;
   z-index: 1000;
 }
+/* Install Button */
+#installButton {
+  position: fixed;
+  bottom: 60px; /* 20px above footer */
+  right: 20px;
+  padding: 12px 24px;
+  border-radius: 25px;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 1000;
+  margin: 0 20px 20px 0;
+}
+
+[dir="rtl"] #installButton {
+  right: auto;
+  left: 20px;
+  margin: 0 0 20px 20px;
+}
+
+/* Instructions Modal */
+.install-instructions {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  max-width: 300px;
+  z-index: 1000;
+}
+
+[dir="rtl"] .install-instructions {
+  right: auto;
+  left: 20px;
+  text-align: right;
+}
+
+.install-instructions button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+[dir="rtl"] .install-instructions button {
+  right: auto;
+  left: 10px;
+}

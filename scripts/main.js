@@ -7,8 +7,8 @@ async function addToQueue(action) {
         if (quota.usage / quota.quota > 0.9) {
             console.warn('Storage quota nearly full');
             return;
-        }
-    }
+		}
+	}
     const db = await openDB();
     const tx = db.transaction(STORE_NAME, 'readwrite');
     const store = tx.objectStore(STORE_NAME);
@@ -16,21 +16,21 @@ async function addToQueue(action) {
         id: Date.now(),
         ...action,
         timestamp: new Date().toISOString()
-    });
+	});
     return tx.done;
 }
 async function openDB() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 1);
-    request.onupgradeneeded = (event) => {
-      const db = event.target.result;
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, { keyPath: 'id' });
-      }
-    };
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = reject;
-  });
+	return new Promise((resolve, reject) => {
+		const request = indexedDB.open(DB_NAME, 1);
+		request.onupgradeneeded = (event) => {
+			const db = event.target.result;
+			if (!db.objectStoreNames.contains(STORE_NAME)) {
+				db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+			}
+		};
+		request.onsuccess = () => resolve(request.result);
+		request.onerror = reject;
+	});
 }
 const translations = {
     en: {
@@ -53,7 +53,17 @@ const translations = {
         arabic: "Arabic",
         placeholder_alt: "Placeholder image for NOC Tunisian Chapter",
 		content_updated: "New content available! Reload to update?",
-		sync_queued: "Changes will sync when online"
+		sync_queued: "Changes will sync when online",
+		install_app: "Install App",
+		ios_install_title: "Install on iOS:",
+		ios_install_steps: `
+		<ol>
+        <li>Open Share menu (box with arrow icon)</li>
+        <li>Select "Add to Home Screen"</li>
+		</ol>
+		`,
+		install_available: "Install available",
+		install_success: "App installed successfully!"
 	},
     ar: {
         main_page: "الصفحة الرئيسية",
@@ -75,7 +85,17 @@ const translations = {
         arabic: "العربية",
         placeholder_alt: "صورة مؤقتة لفرع NOC التونسي",
 		content_updated: "!محتوى جديد متاح. هل تريد التحديث؟",
-		sync_queued: "سيتم مزامنة التغييرات عند الاتصال بالإنترنت"
+		sync_queued: "سيتم مزامنة التغييرات عند الاتصال بالإنترنت",
+		install_app: "تثبيت التطبيق",
+		ios_install_title: "لتثبيت التطبيق على iOS:",
+		ios_install_steps: `
+		<ol>
+        <li>افتح القائمة المشتركة (زر المشاركة)</li>
+        <li>اختر "أضف إلى الشاشة الرئيسية"</li>
+		</ol>
+		`,
+		install_available: "التثبيت متاح",
+		install_success: "!تم تثبيت التطبيق بنجاح"
 	}
 };
 let currentLanguage = localStorage.getItem('currentLanguage') || 'en'; // Get language from local storage, default to 'en'
@@ -197,13 +217,104 @@ async function registerPeriodicSync(registration) {
     try {
         const status = await navigator.permissions.query({
             name: 'periodic-background-sync',
-        });
+		});
         if (status.state === 'granted') {
             await registration.periodicSync.register('content-refresh', {
                 minInterval: 24 * 60 * 60 * 1000 // 24 hours
-            });
-        }
-    } catch (error) {
+			});
+		}
+		} catch (error) {
         console.log('Periodic sync not supported:', error);
-    }
+	}
 }
+let deferredPrompt;
+let isAppInstalled = false;
+
+// Unified installation handler
+function handleInstallation() {
+	const installButton = document.getElementById('installButton');
+	if (!installButton) return;
+	
+	// Update button text direction
+	installButton.style.direction = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+	
+	if (isAppInstalled) {
+		installButton.style.display = 'none';
+		} else if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+		installButton.style.display = 'block';
+	}
+}
+
+// Modified iOS instructions with translation support
+function showInstallInstructions() {
+	const instructions = document.createElement('div');
+	instructions.className = 'install-instructions';
+	instructions.innerHTML = `
+    <h3>${translations[currentLanguage].ios_install_title}</h3>
+    ${translations[currentLanguage].ios_install_steps}
+    <button onclick="this.parentElement.remove()">×</button>
+	`;
+	
+	// RTL support for instructions
+	instructions.style.direction = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+	document.body.appendChild(instructions);
+}
+
+// Update event listeners
+window.addEventListener('beforeinstallprompt', (e) => {
+	e.preventDefault();
+	deferredPrompt = e;
+	handleInstallation();
+});
+
+window.addEventListener('appinstalled', () => {
+	isAppInstalled = true;
+	alert(translations[currentLanguage].install_success);
+	handleInstallation();
+});
+
+// Unified install button handler
+document.getElementById('installButton')?.addEventListener('click', async () => {
+	if (deferredPrompt) {
+		try {
+			deferredPrompt.prompt();
+			const { outcome } = await deferredPrompt.userChoice;
+			if (outcome === 'accepted') {
+				isAppInstalled = true;
+				handleInstallation();
+			}
+			} finally {
+			deferredPrompt = null;
+		}
+		} else if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+		showInstallInstructions();
+	}
+});
+
+// Initial installation check (add to DOMContentLoaded)
+function checkInstalledStatus() {
+	isAppInstalled = window.matchMedia('(display-mode: standalone)').matches || 
+	window.navigator.standalone ||
+	document.referrer.includes('android-app://');
+	handleInstallation();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+	updateText();
+	checkInstalledStatus();
+});
+// Keep button above footer when scrolling
+window.addEventListener('scroll', () => {
+  const installButton = document.getElementById('installButton');
+  if (!installButton) return;
+  
+  const footer = document.querySelector('.footer');
+  const footerRect = footer.getBoundingClientRect();
+  
+  // Calculate position relative to footer
+  if (window.innerHeight - footerRect.top < 100) {
+    installButton.style.bottom = `${window.innerHeight - footerRect.top + 20}px`;
+  } else {
+    installButton.style.bottom = '60px';
+  }
+});
