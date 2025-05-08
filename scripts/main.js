@@ -1,3 +1,37 @@
+const SYNC_TAG = 'content-sync';
+const DB_NAME = 'syncQueueDB';
+const STORE_NAME = 'syncQueue';
+async function addToQueue(action) {
+    if (navigator.storage && navigator.storage.estimate) {
+        const quota = await navigator.storage.estimate();
+        if (quota.usage / quota.quota > 0.9) {
+            console.warn('Storage quota nearly full');
+            return;
+        }
+    }
+    const db = await openDB();
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+    await store.put({
+        id: Date.now(),
+        ...action,
+        timestamp: new Date().toISOString()
+    });
+    return tx.done;
+}
+async function openDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, 1);
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+      }
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = reject;
+  });
+}
 const translations = {
     en: {
         main_page: "Main Page",
@@ -17,8 +51,10 @@ const translations = {
         select_language: "Select Language",
         english: "English",
         arabic: "Arabic",
-        placeholder_alt: "Placeholder image for NOC Tunisian Chapter"
-    },
+        placeholder_alt: "Placeholder image for NOC Tunisian Chapter",
+		content_updated: "New content available! Reload to update?",
+		sync_queued: "Changes will sync when online"
+	},
     ar: {
         main_page: "الصفحة الرئيسية",
         our_members: "أعضاؤنا",
@@ -37,8 +73,10 @@ const translations = {
         select_language: "اختر اللغة",
         english: "الإنجليزية",
         arabic: "العربية",
-        placeholder_alt: "صورة مؤقتة لفرع NOC التونسي"
-    }
+        placeholder_alt: "صورة مؤقتة لفرع NOC التونسي",
+		content_updated: "!محتوى جديد متاح. هل تريد التحديث؟",
+		sync_queued: "سيتم مزامنة التغييرات عند الاتصال بالإنترنت"
+	}
 };
 let currentLanguage = localStorage.getItem('currentLanguage') || 'en'; // Get language from local storage, default to 'en'
 // Function to update the text based on the current language
@@ -48,14 +86,14 @@ function updateText() {
         const key = element.dataset.key;
         if (key && translations[currentLanguage] && translations[currentLanguage][key]) {
             element.textContent = translations[currentLanguage][key];
-        }
-    });
+		}
+	});
     // Update body direction based on language
     document.body.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
     // Update title tag
     document.title = currentLanguage === 'ar' ? 
-        "فرع NOC التونسي" : 
-        "NOC Tunisian Chapter";
+	"فرع NOC التونسي" : 
+	"NOC Tunisian Chapter";
 }
 // Function to create and display the language selection modal
 function showLanguageModal() {
@@ -63,7 +101,7 @@ function showLanguageModal() {
     const existingModal = document.getElementById('language-modal');
     if (existingModal) {
         existingModal.remove();
-    }
+	}
     const modal = document.createElement('div');
     modal.id = 'language-modal';
     modal.classList.add('language-modal');
@@ -79,14 +117,14 @@ function showLanguageModal() {
     englishOption.addEventListener('click', () => {
         setLanguage('en');
         modal.remove();
-    });
+	});
     const arabicOption = document.createElement('button');
     arabicOption.classList.add('language-option');
     arabicOption.textContent = translations[currentLanguage]['arabic'];
     arabicOption.addEventListener('click', () => {
         setLanguage('ar');
         modal.remove();
-    });
+	});
     modalContent.appendChild(title);
     modalContent.appendChild(englishOption);
     modalContent.appendChild(arabicOption);
@@ -96,8 +134,8 @@ function showLanguageModal() {
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.remove();
-        }
-    });
+		}
+	});
 }
 // Function to set the language
 function setLanguage(lang) {
@@ -112,10 +150,18 @@ document.querySelectorAll('.window').forEach(windowElement => {
         if (key === 'language') {
             showLanguageModal();
             return;
-        }
+		}
         alert(translations[currentLanguage]['under_development']);
         event.preventDefault();
-    });
+	});
+});
+// Content update handling
+navigator.serviceWorker.addEventListener('message', event => {
+	if (event.data.type === 'content-updated') {
+		if (confirm(translations[currentLanguage]['content_updated'])) {
+			window.location.reload();
+		}
+	}
 });
 // Initial setup when the page loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -125,22 +171,39 @@ document.addEventListener('DOMContentLoaded', () => {
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('Service Worker registered with scope:', registration.scope);
-            })
-            .catch(error => {
-                console.error('Service Worker registration failed:', error);
-            });
-    });
+		.then(registration => {
+			console.log('Service Worker registered with scope:', registration.scope);
+			registerPeriodicSync(registration);
+		})
+		.catch(error => {
+			console.error('Service Worker registration failed:', error);
+		});
+	});
 }
-async function registerPeriodicSync() {
-    if ('periodicSync' in registration) {
-        try {
+async function queueAction(action) {
+	if ('serviceWorker' in navigator && 'SyncManager' in window) {
+		const registration = await navigator.serviceWorker.ready;
+		try {
+			await addToQueue(action);
+			await registration.sync.register(SYNC_TAG);
+			alert(translations[currentLanguage]['sync_queued']);
+			} catch (error) {
+			console.error('Sync registration failed:', error);
+		}
+	}
+}
+// Update the registerPeriodicSync function
+async function registerPeriodicSync(registration) {
+    try {
+        const status = await navigator.permissions.query({
+            name: 'periodic-background-sync',
+        });
+        if (status.state === 'granted') {
             await registration.periodicSync.register('content-refresh', {
                 minInterval: 24 * 60 * 60 * 1000 // 24 hours
             });
-        } catch (error) {
-            console.log('Periodic sync registration failed:', error);
         }
+    } catch (error) {
+        console.log('Periodic sync not supported:', error);
     }
 }

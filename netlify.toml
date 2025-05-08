@@ -1,0 +1,6 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Service-Worker-Allowed = "/"
+    X-Content-Type-Options = "nosniff"
+    Content-Security-Policy = "default-src 'self'"
