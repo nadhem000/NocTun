@@ -2,5 +2,10 @@
 	"name": "NOC Tunisian Chapter",
 	"short_name": "NOCTun",
 	"id": "NOCTun",
-	"start_url": "/"
+	"description": "موقع الفرع التونسي للاتحاد الفلكي العالمي. نزل التطبيق لتبقى  على اطلاع.",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#0056b3",
+	"orientation": "portrait"
 }
