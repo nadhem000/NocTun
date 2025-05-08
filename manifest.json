@@ -2,26 +2,5 @@
 	"name": "NOC Tunisian Chapter",
 	"short_name": "NOCTun",
 	"id": "NOCTun",
-	"start_url": "/",
-	"display": "standalone",
-	"background_color": "#ffffff",  // Often white for a clean look
-	"theme_color": "#0056b3",      // A shade of blue often associated with professional organizations, adjust to match branding
-	"orientation": "portrait",
-	"edge_side_panel": {
-		"preferred_width": 400
-	},
-	"display_override": [
-		"window-controls-overlay",
-		"standalone",
-		"browser"
-	],
-	"launch_handler": {
-		"client_mode": "auto"
-	},
-	"categories": ["games", "education", "kids"],
-	"dir": "auto",
-	"iarc_rating_id": "e58c174a-81d2-5c3c-32cc-34b8de4a52e9",
-	"lang": "ar",
-	"prefer_related_applications": false,
-	"scope": "/"
+	"start_url": "/"
 }
