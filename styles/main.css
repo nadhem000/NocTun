@@ -69,17 +69,27 @@ body {
     margin-bottom: 20px; /* Add space between windows on smaller screens */
 }
 
+
+/* Footer Adjustment */
 .footer {
-    text-align: center;
-    padding: 10px; /* Reduced padding for a smaller look */
-    background-color: #333;
-    color: white;
-    width: 100%; /* Ensure it spans the full width */
-    position: fixed; /* Stick to the bottom of the viewport */
-    bottom: 0; /* Position it at the bottom */
-    left: 0; /* Align to the left edge */
-    font-size: 0.9em; /* Slightly smaller font size */
-    z-index: 100; /* Ensure it's above other content if needed */
+  height: 40px; /* Explicit height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  #installButton {
+    bottom: 55px;
+    padding: 10px 20px;
+    font-size: 0.9em;
+  }
+  
+  .footer {
+    height: auto;
+    padding: 8px;
+  }
 }
 
 /* Responsive Design */
