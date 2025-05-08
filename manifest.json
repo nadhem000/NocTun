@@ -24,18 +24,5 @@
 	],
 	"launch_handler": {
 		"client_mode": "auto"
-	},
-	"icons": [
-		{
-			"src": "assets/icons/noc-logo-512x512.png",
-			"sizes": "512x512",
-			"type": "image/png",
-			"purpose": "any"
-		},
-		{
-			"src": "assets/icons/noc-logo-192x192.png",
-			"sizes": "192x192",
-			"type": "image/png",
-			"purpose": "maskable"
-		}
+	}
 }
