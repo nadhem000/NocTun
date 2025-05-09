@@ -8,6 +8,7 @@
 	"background_color": "#ffffff",
 	"theme_color": "#0056b3",
 	"orientation": "portrait",
+	"handle_links": "preferred",
 	"edge_side_panel": {
 		"preferred_width": 400
 	},
@@ -103,5 +104,22 @@
 			],
 			"launch_type": "single-client"
 		}
-	]
+	],
+	"related_applications": [
+  {
+    "platform": "windows",
+    "url": "https://www.example-app.com",
+    "id": "example.ExampleApp"
+  },
+  {
+    "platform": "play",
+    "url": "https://www.example-app-2.com"
+  }
+],
+	"protocol_handlers": [
+  {
+    "protocol": "web+music",
+    "url": "/play?track=%s"
+  }
+]
 }
