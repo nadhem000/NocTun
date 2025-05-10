@@ -92,82 +92,6 @@
     color: #555;
   }
 
-  /* Tooltip styles (from previous code) */
-  .video-tooltip {
-    position: absolute;
-    width: 300px;
-    height: 200px;
-    background: #222;
-    padding: 5px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    z-index: 1000;
-  }
-  .video-tooltip video {
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-  }
-
-  /* Additional styles for presentation & install texts to show tooltips */
-  .text-tooltip {
-    display: inline-block;
-    margin: 10px 20px;
-    font-size: 1.2em;
-    cursor: pointer;
-    padding: 8px 12px;
-    background: #ddd;
-    border-radius: 4px;
-    transition: background 0.2s;
-  }
-  .text-tooltip:hover,
-  .text-tooltip:focus {
-    background: #ccc;
-    outline: none;
-  }
-
-  /* Buttons and modal styles (if needed) */
-  button {
-    cursor: pointer;
-    padding: 8px 16px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 4px;
-    background-color: #333;
-    color: #fff;
-    font-size: 1em;
-  }
-  button:hover {
-    background-color: #555;
-  }
-
-  /* Install instructions modal */
-  .install-instructions {
-    display: none; /* default hidden, toggle via class or JS */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    max-width: 400px;
-    z-index: 2000;
-  }
-  /* Show class to display modal */
-  .install-instructions.show {
-    display: block;
-  }
-  .close-instructions {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    background: none;
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
-  }
 </style>
 </head>
 <body>
@@ -208,10 +132,40 @@
   <!-- Contact Squares Grid -->
   <div class="contact-grid">
     <!-- Address -->
-    <div class="contact-square" role="button" data-video-key="address" aria-label="Address">
-      <img src="assets/icons/video-icon-256x256.png" />
-      <div class="contact-type" data-key="address"></div>
+    <div class="contact-square" role="button" tabindex="0" data-video-key="address" aria-label="Address">
+      <img src="assets/icons/video-icon-256x256.png" alt="Address Icon" />
+      <div class="contact-type" data-key="address">Address</div>
       <div class="contact-info">123 Main Street, Tunis</div>
+    </div>
+    <!-- Facebook -->
+    <div class="contact-square" role="button" tabindex="0" data-video-key="facebook" aria-label="Facebook">
+      <img src="assets/icons/video-icon-256x256.png" alt="Facebook Icon" />
+      <div class="contact-type" data-key="facebook">Facebook</div>
+      <div class="contact-info">facebook.com/noc.tunisia</div>
+    </div>
+    <!-- Email -->
+    <div class="contact-square" role="button" tabindex="0" data-video-key="email" aria-label="Email">
+      <img src="assets/icons/video-icon-256x256.png" alt="Email Icon" />
+      <div class="contact-type" data-key="email">Email</div>
+      <div class="contact-info">contact@noc-tunisia.org</div>
+    </div>
+    <!-- Phone -->
+    <div class="contact-square" role="button" tabindex="0" data-video-key="phone" aria-label="Phone">
+      <img src="assets/icons/video-icon-256x256.png" alt="Phone Icon" />
+      <div class="contact-type" data-key="phone">Phone</div>
+      <div class="contact-info">+216 12345678</div>
+    </div>
+    <!-- Twitter -->
+    <div class="contact-square" role="button" tabindex="0" data-video-key="twitter" aria-label="Twitter">
+      <img src="assets/icons/video-icon-256x256.png" alt="Twitter Icon" />
+      <div class="contact-type" data-key="twitter">Twitter</div>
+      <div class="contact-info">twitter.com/noc_tunisia</div>
+    </div>
+    <!-- LinkedIn -->
+    <div class="contact-square" role="button" tabindex="0" data-video-key="linkedin" aria-label="LinkedIn">
+      <img src="assets/icons/video-icon-256x256.png" alt="LinkedIn Icon" />
+      <div class="contact-type" data-key="linkedin">LinkedIn</div>
+      <div class="contact-info">linkedin.com/company/noc-tunisia</div>
     </div>
   </div>
 </main>
