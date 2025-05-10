@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self' 'unsafe-inline'">
-  <title>NOC Tunisian Chapter</title>
-  <link rel="stylesheet" href="styles/main.css" />
-  <link rel="manifest" href="manifest.json" />
-</head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self' 'unsafe-inline'">
+		<title>NOC Tunisian Chapter</title>
+		<link rel="stylesheet" href="styles/main.css" />
+		<link rel="manifest" href="manifest.json" />
+	</head>
 	<body>
 		
 		<header class="header" aria-label="Main Navigation">
@@ -36,78 +36,78 @@
 			<!-- Language -->
 			<div class="translatable window" role="button" tabindex="0" aria-label="Language" data-key="language" data-video-key="language" title="Change Language">
 				<span class="translatable" data-key="language">Language</span>
+				<div class="hover-content">Placeholder Video/Images</div>
 			</div>
 		</header>
 		
 		<main>
 			<h1 class="translatable" data-key="contact_us_header">Contact Us</h1>
 			<p class="translatable" data-key="reach_us">You can reach us at:</p>
-			
-			<!-- Contact Squares Grid -->
 			<div class="contact-grid">
 				<!-- Address -->
-				<div class="contact-square" role="button" tabindex="0" data-video-key="address" aria-label="Address">
+				<div class="contact-square" role="button" tabindex="0" aria-label="Address" data-video-key="address" title="Address">
 					<img src="assets/icons/video-icon-256x256.png" alt="Address Icon" />
-					<div class="contact-type" data-key="address">Address</div>
-					<div class="contact-info">123 Main Street, Tunis</div>
+					<span class="translatable" data-key="address">Address</span>
+					<div class="hover-content">Placeholder Video/Images</div>
 				</div>
 				<!-- Facebook -->
-				<div class="contact-square" role="button" tabindex="0" data-video-key="facebook" aria-label="Facebook">
+				<div class="contact-square" role="button" tabindex="0" aria-label="Facebook" data-video-key="facebook" title="Facebook">
 					<img src="assets/icons/video-icon-256x256.png" alt="Facebook Icon" />
-					<div class="contact-type" data-key="facebook">Facebook</div>
-					<div class="contact-info">facebook.com/noc.tunisia</div>
+					<span class="translatable" data-key="facebook">Facebook</span>
+					<div class="hover-content">Placeholder Video/Images</div>
 				</div>
 				<!-- Email -->
-				<div class="contact-square" role="button" tabindex="0" data-video-key="email" aria-label="Email">
+				<div class="contact-square" role="button" tabindex="0" aria-label="Email" data-video-key="email" title="Email">
 					<img src="assets/icons/video-icon-256x256.png" alt="Email Icon" />
-					<div class="contact-type" data-key="email">Email</div>
-					<div class="contact-info">contact@noc-tunisia.org</div>
+					<span class="translatable" data-key="email">Email</span>
+					<div class="hover-content">Placeholder Video/Images</div>
 				</div>
 				<!-- Phone -->
-				<div class="contact-square" role="button" tabindex="0" data-video-key="phone" aria-label="Phone">
+				<div class="contact-square" role="button" tabindex="0" aria-label="Phone" data-video-key="phone" title="Phone">
 					<img src="assets/icons/video-icon-256x256.png" alt="Phone Icon" />
-					<div class="contact-type" data-key="phone">Phone</div>
-					<div class="contact-info">+216 12345678</div>
+					<span class="translatable" data-key="phone">Phone</span>
+					<div class="hover-content">Placeholder Video/Images</div>
 				</div>
 				<!-- Twitter -->
-				<div class="contact-square" role="button" tabindex="0" data-video-key="twitter" aria-label="Twitter">
+				<div class="contact-square" role="button" tabindex="0" aria-label="Twitter" data-video-key="twitter" title="Twitter">
 					<img src="assets/icons/video-icon-256x256.png" alt="Twitter Icon" />
-					<div class="contact-type" data-key="twitter">Twitter</div>
-					<div class="contact-info">twitter.com/noc_tunisia</div>
+					<span class="translatable" data-key="twitter">Twitter</span>
+					<div class="hover-content">Placeholder Video/Images</div>
 				</div>
 				<!-- LinkedIn -->
-				<div class="contact-square" role="button" tabindex="0" data-video-key="linkedin" aria-label="LinkedIn">
+				<div class="contact-square" role="button" tabindex="0" aria-label="LinkedIn" data-video-key="linkedin" title="LinkedIn">
 					<img src="assets/icons/video-icon-256x256.png" alt="LinkedIn Icon" />
-					<div class="contact-type" data-key="linkedin">LinkedIn</div>
-					<div class="contact-info">linkedin.com/company/noc-tunisia</div>
+					<span class="translatable" data-key="linkedin">LinkedIn</span>
+					<div class="hover-content">Placeholder Video/Images</div>
 				</div>
 			</div>
-		</main>
-		
-		<!-- Install Button & Modal -->
-		<button id="stopTooltipsButton" class="translatable" data-key="stop_tooltips">Deactivate Tooltips</button>
-		<button id="installButton" class="translatable" data-key="install_app" style="display: none;">Install App</button>
-		
-		<button id="install-instructions-title" class="translatable" data-key="install-instructions-title" style="display: inline-block;">Install Instructions</button>
-		<!-- <div class="install-instructions" 
-			style="display: none;" 
-			role="dialog" 
-			aria-modal="true" 
-			aria-labelledby="install-instructions-title" 
-			aria-describedby="install-instructions-text">
-			<button aria-label="Close" class="close-instructions">×</button>
-			<h3 id="install-instructions-title" class="translatable" data-key="install_instructions_title">Install Instructions</h3>
-			<p id="install-instructions-text" class="translatable" data-key="install_instructions_text">
-			To install this app, tap the share icon and select "Add to Home Screen."
-			</p>
-		</div> -->
-		
-		<!-- Footer -->
-		<footer class="footer">
-			<p class="translatable" data-key="developer">Developer: Mejri Ziad</p>
-			<p class="translatable" data-key="version">Version: 1.0</p>
-		</footer>
-		
-		<script src="scripts/main.js"></script>
+		</div>
+	</main>
+	
+	<!-- Install Button & Modal -->
+	<button id="stopTooltipsButton" class="translatable" data-key="stop_tooltips">Deactivate Tooltips</button>
+	<button id="installButton" class="translatable" data-key="install_app" style="display: none;">Install App</button>
+	
+	<button id="install-instructions-title" class="translatable" data-key="install-instructions-title" style="display: inline-block;">Install Instructions</button>
+	<!-- <div class="install-instructions" 
+		style="display: none;" 
+		role="dialog" 
+		aria-modal="true" 
+		aria-labelledby="install-instructions-title" 
+		aria-describedby="install-instructions-text">
+		<button aria-label="Close" class="close-instructions">×</button>
+		<h3 id="install-instructions-title" class="translatable" data-key="install_instructions_title">Install Instructions</h3>
+		<p id="install-instructions-text" class="translatable" data-key="install_instructions_text">
+		To install this app, tap the share icon and select "Add to Home Screen."
+		</p>
+	</div> -->
+	
+	<!-- Footer -->
+	<footer class="footer">
+		<p class="translatable" data-key="developer">Developer: Mejri Ziad</p>
+		<p class="translatable" data-key="version">Version: 1.0</p>
+	</footer>
+	
+	<script src="scripts/main.js"></script>
 	</body>
 </html>
