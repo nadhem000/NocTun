@@ -1,122 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
-<title>NOC Tunisian Chapter</title>
-<link rel="stylesheet" href="styles/main.css" />
-<link rel="manifest" href="manifest.json" />
-<style>
-  /* Basic Reset & Body Styling */
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0 0 40px 0;
-    background-color: #f4f4f4;
-    line-height: 1.6;
-    color: #333;
-  }
-
-
-  /* Main Content */
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 30px;
-  }
-  .contact-square {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 15px;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s;
-  }
-  .contact-square:hover {
-    background-color: #eef;
-    transform: translateY(-2px);
-  }
-  .contact-square img {
-    max-width: 80px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-  }
-  .contact-type {
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
-  .contact-info {
-    font-size: 0.9em;
-    color: #555;
-  }
-
-</style>
-</head>
-<body>
-
-<header class="header" aria-label="Main Navigation">
-  <!-- Main Page Link -->
-  <div class="window" role="button" aria-label="Main Page" title="Main Page" data-page="index.html" data-video-key="main_page">
-    <span class="translatable" data-key="main_page">Main Page</span>
-  </div>
-  <!-- Our Members -->
-  <div class="window" role="button" aria-label="Our Members" data-video-key="our_members" title="Our Members">
-    <span class="translatable" data-key="our_members">Our Members</span>
-  </div>
-  <!-- Associations -->
-  <div class="window" role="button" aria-label="Associations" data-video-key="associations" title="Associations">
-    <span class="translatable" data-key="associations">Associations</span>
-  </div>
-  <!-- Chapter Activities -->
-  <div class="window" role="button" aria-label="Chapter Activities" data-video-key="chapter_activities" title="Chapter Activities">
-    <span class="translatable" data-key="chapter_activities">Chapter Activities</span>
-  </div>
-  <!-- Contact Us (linked to contact.html) -->
-  <div class="window" role="button" aria-label="Contact Us" title="Contact Us" data-page="contact.html" data-video-key="contact_us">
-    <span class="translatable" data-key="contact_us">Contact Us</span>
-    <a href="contact.html" style="color:inherit; text-decoration:none;"></a>
-    <div class="hover-content">Placeholder Video/Images</div>
-  </div>
-  <!-- Language -->
-  <div class="translatable window" role="button" aria-label="Language" data-key="language" data-video-key="language" title="Change Language">
-    <span class="translatable" data-key="language">Language</span>
-  </div>
-</header>
-
-<main>
-  <h1 class="translatable" data-key="contact_us_header">Contact Us</h1>
-  <p class="translatable" data-key="reach_us">You can reach us at:</p>
-  
-  <!-- Contact Squares Grid -->
-  <div class="contact-grid">
-    <!-- Address -->
-    <div class="contact-square" role="button" data-video-key="address" >
-      <div class="contact-type" data-key="address"></div>
-      <div class="contact-info">123 Main Street, Tunis</div>
-    </div>
-  </div>
-</main>
-
-<!-- Install Button & Modal -->
-<button id="stopTooltipsButton" class="translatable" data-key="stop_tooltips">Deactivate Tooltips</button>
-<button id="installButton" class="translatable" data-key="install_app" style="display: none;">Install App</button>
-
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+		<title>NOC Tunisian Chapter</title>
+		<link rel="stylesheet" href="styles/main.css" />
+		<link rel="manifest" href="manifest.json" />
+		<style>
+			/* Basic Reset & Body Styling */
+			body {
+			font-family: Arial, Helvetica, sans-serif;
+			margin: 0;
+			padding: 0 0 40px 0;
+			background-color: #f4f4f4;
+			line-height: 1.6;
+			color: #333;
+			}
+			
+			/* Header Styles */
+			.header {
+			display: flex;
+			justify-content: space-around;
+			background-color: #333;
+			color: #fff;
+			padding: 10px 0;
+			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+			flex-wrap: wrap;
+			}
+			.header .window {
+			padding: 10px 20px;
+			cursor: pointer;
+			position: relative;
+			text-align: center;
+			transition: background-color 0.3s ease, transform 0.3s ease;
+			flex: 1 1 120px;
+			margin: 5px;
+			border-radius: 5px;
+			min-width: 120px;
+			}
+			.header .window:hover {
+			background-color: #555;
+			transform: translateY(-2px);
+			}
+			.header .window a {
+			color: inherit;
+			text-decoration: none;
+			}
+			
+			/* Main Content */
+			main {
+			padding: 20px;
+			max-width: 900px;
+			margin: auto;
+			}
+			h1 {
+			text-align: center;
+			margin-bottom: 20px;
+			}
+			.contact-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 15px;
+			margin-bottom: 30px;
+			}
+			.contact-square {
+			background: #fff;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+			padding: 15px;
+			text-align: center;
+			cursor: pointer;
+			position: relative;
+			transition: all 0.2s;
+			}
+			.contact-square:hover {
+			background-color: #eef;
+			transform: translateY(-2px);
+			}
+			.contact-square img {
+			max-width: 80px;
+			margin-bottom: 10px;
+			border-radius: 8px;
+			}
+			.contact-type {
+			font-weight: bold;
+			margin-bottom: 8px;
+			}
+			.contact-info {
+			font-size: 0.9em;
+			color: #555;
+			}
+			
+			/* Tooltip styles (from previous code) */
+			.video-tooltip {
+			position: absolute;
+			width: 300px;
+			height: 200px;
+			background: #222;
+			padding: 5px;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+			z-index: 1000;
+			}
+			.video-tooltip video {
+			width: 100%;
+			height: 100%;
+			border-radius: 8px;
+			}
+			
+			/* Additional styles for presentation & install texts to show tooltips */
+			.text-tooltip {
+			display: inline-block;
+			margin: 10px 20px;
+			font-size: 1.2em;
+			cursor: pointer;
+			padding: 8px 12px;
+			background: #ddd;
+			border-radius: 4px;
+			transition: background 0.2s;
+			}
+			.text-tooltip:hover,
+			.text-tooltip:focus {
+			background: #ccc;
+			outline: none;
+			}
+			
+			/* Buttons and modal styles (if needed) */
+			button {
+			cursor: pointer;
+			padding: 8px 16px;
+			margin: 10px 0;
+			border: none;
+			border-radius: 4px;
+			background-color: #333;
+			color: #fff;
+			font-size: 1em;
+			}
+			button:hover {
+			background-color: #555;
+			}
+			
+			/* Install instructions modal */
+			.install-instructions {
+			display: none; /* default hidden, toggle via class or JS */
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: #fff;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+			max-width: 400px;
+			z-index: 2000;
+			}
+			/* Show class to display modal */
+			.install-instructions.show {
+			display: block;
+			}
+			.close-instructions {
+			position: absolute;
+			top: 8px;
+			right: 12px;
+			background: none;
+			border: none;
+			font-size: 1.5em;
+			cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<header class="header" aria-label="Main Navigation">
+			<!-- Main Page Link -->
+			<div class="window" role="button" tabindex="0" aria-label="Main Page" title="Main Page" data-page="index.html" data-video-key="main_page">
+				<span class="translatable" data-key="main_page">Main Page</span>
+			</div>
+			<!-- Our Members -->
+			<div class="window" role="button" tabindex="0" aria-label="Our Members" data-video-key="our_members" title="Our Members">
+				<span class="translatable" data-key="our_members">Our Members</span>
+			</div>
+			<!-- Associations -->
+			<div class="window" role="button" tabindex="0" aria-label="Associations" data-video-key="associations" title="Associations">
+				<span class="translatable" data-key="associations">Associations</span>
+			</div>
+			<!-- Chapter Activities -->
+			<div class="window" role="button" tabindex="0" aria-label="Chapter Activities" data-video-key="chapter_activities" title="Chapter Activities">
+				<span class="translatable" data-key="chapter_activities">Chapter Activities</span>
+			</div>
+			<!-- Contact Us (linked to contact.html) -->
+			<div class="window" role="button" tabindex="0" aria-label="Contact Us" title="Contact Us" data-page="contact.html" data-video-key="contact_us">
+				<span class="translatable" data-key="contact_us">Contact Us</span>
+				<a href="contact.html" style="color:inherit; text-decoration:none;"></a>
+				<div class="hover-content">Placeholder Video/Images</div>
+			</div>
+			<!-- Language -->
+			<div class="translatable window" role="button" tabindex="0" aria-label="Language" data-key="language" data-video-key="language" title="Change Language">
+				<span class="translatable" data-key="language">Language</span>
+			</div>
+		</header>
+		
+		<main>
+			<h1 class="translatable" data-key="contact_us_header">Contact Us</h1>
+			<p class="translatable" data-key="reach_us">You can reach us at:</p>
+			
+			<!-- Contact Squares Grid -->
+			<div class="contact-grid">
+				<!-- Address -->
+				<div class="contact-square" role="button" tabindex="0" data-video-key="address" aria-label="Address">
+					<div class="contact-type" data-key="address">Address</div>
+					<div class="contact-info">123 Main Street, Tunis</div>
+				</div>
+				<!-- Facebook -->
+				<div class="contact-square" role="button" tabindex="0" data-video-key="facebook" aria-label="Facebook">
+					<div class="contact-type" data-key="facebook">Facebook</div>
+					<div class="contact-info">facebook.com/noc.tunisia</div>
+				</div>
+				<!-- Email -->
+				<div class="contact-square" role="button" tabindex="0" data-video-key="email" aria-label="Email">
+					<div class="contact-type" data-key="email">Email</div>
+					<div class="contact-info">contact@noc-tunisia.org</div>
+				</div>
+				<!-- Phone -->
+				<div class="contact-square" role="button" tabindex="0" data-video-key="phone" aria-label="Phone">
+					<div class="contact-type" data-key="phone">Phone</div>
+					<div class="contact-info">+216 12345678</div>
+				</div>
+				<!-- Twitter -->
+				<div class="contact-square" role="button" tabindex="0" data-video-key="twitter" aria-label="Twitter">
+					<div class="contact-type" data-key="twitter">Twitter</div>
+					<div class="contact-info">twitter.com/noc_tunisia</div>
+				</div>
+				<!-- LinkedIn -->
+				<div class="contact-square" role="button" tabindex="0" data-video-key="linkedin" aria-label="LinkedIn">
+					<div class="contact-type" data-key="linkedin">LinkedIn</div>
+					<div class="contact-info">linkedin.com/company/noc-tunisia</div>
+				</div>
+			</div>
+		</main>
+		
+		<!-- Install Button & Modal -->
+		<button id="stopTooltipsButton" class="translatable" data-key="stop_tooltips">Deactivate Tooltips</button>
+		<button id="installButton" class="translatable" data-key="install_app" style="display: none;">Install App</button>
+		
 		<button id="install-instructions-title" class="translatable" data-key="install-instructions-title" style="display: inline-block;">Install Instructions</button>
-
-<!-- Footer -->
-<footer class="footer">
-  <p class="translatable" data-key="developer">Developer: Mejri Ziad</p>
-  <p class="translatable" data-key="version">Version: 1.0</p>
-</footer>
-
-<script src="scripts/main.js"></script>
-</body>
+		<!-- <div class="install-instructions" 
+			style="display: none;" 
+			role="dialog" 
+			aria-modal="true" 
+			aria-labelledby="install-instructions-title" 
+			aria-describedby="install-instructions-text">
+			<button aria-label="Close" class="close-instructions">×</button>
+			<h3 id="install-instructions-title" class="translatable" data-key="install_instructions_title">Install Instructions</h3>
+			<p id="install-instructions-text" class="translatable" data-key="install_instructions_text">
+			To install this app, tap the share icon and select "Add to Home Screen."
+			</p>
+		</div> -->
+		
+		<!-- Footer -->
+		<footer class="footer">
+			<p class="translatable" data-key="developer">Developer: Mejri Ziad</p>
+			<p class="translatable" data-key="version">Version: 1.0</p>
+		</footer>
+		
+		<script src="scripts/main.js"></script>
+	</body>
 </html>
