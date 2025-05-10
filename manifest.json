@@ -108,12 +108,12 @@
 	"related_applications": [
 		{
 			"platform": "windows",
-			"url": "https://www.example-app.com",
+			"url": "https://noc-tunisian-chapter.netlify.app/contact.html",
 			"id": "example.ExampleApp"
 		},
 		{
 			"platform": "play",
-			"url": "https://www.example-app-2.com"
+			"url": "https://noc-tunisian-chapter.netlify.app/contact.html"
 		}
 	],
 	"protocol_handlers": [
