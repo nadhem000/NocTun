@@ -1,118 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="styles/main.css" />
-		<link rel="manifest" href="manifest.json" />
-  <title>NOC Tunisian Chapter</title>
-  <style>
-    /* Basic Reset & Body Styling */
-
-
-/* Header Styles */
-
-
-
-
-/* Main Content & Grid */
-main {
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
-}
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* Contact Grid */
-.contact-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  margin-bottom: 30px;
-}
-.contact-square {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  padding: 15px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.contact-square img {
-  max-width: 80px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-}
-.contact-type {
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-.contact-info {
-  font-size: 0.9em;
-  color: #555;
-}
-
-/* Footer styling */
-
-  </style>
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    border: 2px dashed blue;
+  }
+  .contact-square {
+    background: #eee;
+    padding: 20px;
+    border-radius: 8px;
+  }
+</style>
 </head>
 <body>
-		<header class="header" aria-label="Main Navigation">
-			<!-- Main Page Link -->
-			<div class="window" role="button" tabindex="0" aria-label="Main Page" title="Main Page" data-page="index.html" data-video-key="main_page">
-				<span class="translatable" data-key="main_page">Main Page</span>
-			</div>
-			<!-- Our Members -->
-			<div class="window" role="button" tabindex="0" aria-label="Our Members" data-video-key="our_members" title="Our Members">
-				<span class="translatable" data-key="our_members">Our Members</span>
-			</div>
-			<!-- Associations -->
-			<div class="window" role="button" tabindex="0" aria-label="Associations" data-video-key="associations" title="Associations">
-				<span class="translatable" data-key="associations">Associations</span>
-			</div>
-			<!-- Chapter Activities -->
-			<div class="window" role="button" tabindex="0" aria-label="Chapter Activities" data-video-key="chapter_activities" title="Chapter Activities">
-				<span class="translatable" data-key="chapter_activities">Chapter Activities</span>
-			</div>
-			<!-- Contact Us (linked to contact.html) -->
-			<div class="window" role="button" tabindex="0" aria-label="Contact Us" title="Contact Us" data-page="contact.html" data-video-key="contact_us">
-				<span class="translatable" data-key="contact_us">Contact Us</span>
-				<a href="contact.html" style="color:inherit; text-decoration:none;"></a>
-				<div class="hover-content">Placeholder Video/Images</div>
-			</div>
-			<!-- Language -->
-			<div class="translatable window" role="button" tabindex="0" aria-label="Language" data-key="language" data-video-key="language" title="Change Language">
-				<span class="translatable" data-key="language">Language</span>
-			</div>
-		</header>
-  
-  <main>
-    <h1>Contact Us</h1>
-    <div class="contact-grid">
-      <div class="contact-square" role="button" tabindex="0">
-        <img src="assets/icons/video-icon-256x256.png" alt="Address Icon" />
-        <div class="contact-type">Address</div>
-        <div class="contact-info">123 Main Street, Tunis</div>
-      </div>
-      <!-- other contact squares -->
-    <h1>Contact Us</h1>
-    <div class="contact-grid">
-      <div class="contact-square" role="button" tabindex="0">
-        <img src="assets/icons/video-icon-256x256.png" alt="Address Icon" />
-        <div class="contact-type">Address</div>
-        <div class="contact-info">123 Main Street, Tunis</div>
-      </div>
-    </div>
-  </main>
-  
-  <footer class="footer">
-    <p>Developer: Mejri Ziad</p>
-    <p>Version: 1.0</p>
-  </footer>
-		<script src="scripts/main.js"></script>
+  <div class="contact-grid">
+    <div class="contact-square">Item 1</div>
+    <div class="contact-square">Item 2</div>
+    <div class="contact-square">Item 3</div>
+    <div class="contact-square">Item 4</div>
+  </div>
 </body>
 </html>
