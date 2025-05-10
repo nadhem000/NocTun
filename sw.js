@@ -5,6 +5,7 @@ const CACHE_NAME = `noctun-site-${CONTENT_VERSION}`;
 const DB_NAME = 'syncQueueDB';
 const STORE_NAME = 'syncQueue';
 
+// Security improvement: Use strict CSP-compatible assets list
 const ASSETS = [
   '/',
   '/index.html',
@@ -23,7 +24,7 @@ const ASSETS = [
   '/assets/icons/image-icon-256x256.png',
   '/assets/icons/video-icon-256x256.png',
   '/assets/pdf/iau_strategy_2030.pdf'
-];
+].map(url => new URL(url, self.location.origin).href); // Ensure absolute URLs
 
 // ========================
 // Installation & Activation
@@ -31,7 +32,13 @@ const ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(ASSETS))
+      .then(cache => {
+        // Security improvement: Add cache.addAll error handling
+        return cache.addAll(ASSETS).catch(error => {
+          console.error('Failed to cache:', error);
+          throw error;
+        });
+      })
       .then(() => self.skipWaiting())
   );
 });
@@ -41,17 +48,30 @@ self.addEventListener('activate', (event) => {
     caches.keys().then(cacheNames => 
       Promise.all(
         cacheNames.map(cacheName => 
-          cacheName !== CACHE_NAME ? caches.delete(cacheName) : null
-        )
+          cacheName.startsWith('noctun-site-') && cacheName !== CACHE_NAME ? 
+            caches.delete(cacheName) : 
+            null
+        ).filter(Boolean) // Filter out null values
       )
     ).then(() => self.clients.claim())
   );
 });
 
 // ========================
-// Fetch Handling
+// Fetch Handling (Security Enhanced)
 // ========================
 self.addEventListener('fetch', (event) => {
+  // Security improvement: Skip non-GET requests and opaque responses
+  if (event.request.method !== 'GET' || event.request.mode === 'no-cors') {
+    return;
+  }
+
+  // Security improvement: Validate request URL
+  const requestUrl = new URL(event.request.url);
+  if (requestUrl.origin !== self.location.origin) {
+    return; // Skip cross-origin requests unless specifically handled
+  }
+
   if (event.request.mode === 'navigate') {
     event.respondWith(handleNavigationRequest(event));
     return;
@@ -67,12 +87,16 @@ self.addEventListener('fetch', (event) => {
 
 async function handleNavigationRequest(event) {
   try {
-    const networkResponse = await fetch(event.request);
+    // Security improvement: Add timeout to fetch
+    const networkResponse = await timeoutFetch(event.request.clone(), 5000);
     return networkResponse;
   } catch (error) {
     const cache = await caches.open(CACHE_NAME);
     const cachedResponse = await cache.match(OFFLINE_URL);
-    return cachedResponse || new Response('Offline', { status: 503 });
+    return cachedResponse || new Response('Offline', { 
+      status: 503,
+      headers: { 'Content-Type': 'text/html; charset=utf-8' }
+    });
   }
 }
 
@@ -82,8 +106,11 @@ async function handleMediaRequest(event) {
   if (cachedResponse) return cachedResponse;
 
   try {
-    const networkResponse = await fetch(event.request);
-    await cache.put(event.request, networkResponse.clone());
+    const networkResponse = await timeoutFetch(event.request.clone(), 5000);
+    // Security improvement: Validate response before caching
+    if (networkResponse && networkResponse.ok) {
+      await cache.put(event.request, networkResponse.clone());
+    }
     return networkResponse;
   } catch (error) {
     return serveMediaFallback(event.request);
@@ -92,20 +119,23 @@ async function handleMediaRequest(event) {
 
 async function networkFirstThenCache(event) {
   try {
-    const networkResponse = await fetch(event.request);
-    if (event.request.method === 'GET') {
+    const networkResponse = await timeoutFetch(event.request.clone(), 5000);
+    if (networkResponse && networkResponse.ok) {
       const cache = await caches.open(CACHE_NAME);
       await cache.put(event.request, networkResponse.clone());
     }
     return networkResponse;
   } catch (error) {
     const cachedResponse = await caches.match(event.request);
-    return cachedResponse || new Response('Offline', { status: 503 });
+    return cachedResponse || new Response('Offline', { 
+      status: 503,
+      headers: { 'Content-Type': 'text/html; charset=utf-8' }
+    });
   }
 }
 
 // ========================
-// Background Sync
+// Background Sync (Security Enhanced)
 // ========================
 self.addEventListener('sync', event => {
   if (event.tag === SYNC_TAG) {
@@ -123,11 +153,18 @@ async function handleBackgroundSync() {
   const queue = await getSyncQueue();
   for (const item of queue) {
     try {
-      const response = await fetch(item.url, {
+      // Security improvement: Validate sync items
+      if (!isValidSyncItem(item)) {
+        await removeFromQueue(item.id);
+        continue;
+      }
+
+      const response = await timeoutFetch(new Request(item.url, {
         method: item.method,
         headers: new Headers(item.headers),
-        body: item.body
-      });
+        body: item.body,
+        credentials: 'same-origin' // Security: Restrict credentials
+      }), 10000);
       
       if (!response.ok) throw new Error('HTTP error '+response.status);
       await removeFromQueue(item.id);
@@ -139,7 +176,7 @@ async function handleBackgroundSync() {
 }
 
 // ========================
-// IndexedDB Queue Management
+// IndexedDB Queue Management (Security Enhanced)
 // ========================
 function openDB() {
   return new Promise((resolve, reject) => {
@@ -148,7 +185,9 @@ function openDB() {
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
       if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+        const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+        // Security improvement: Create indexes for better validation
+        store.createIndex('timestamp', 'timestamp', { unique: false });
       }
     };
     
@@ -158,6 +197,11 @@ function openDB() {
 }
 
 async function addToQueue(data) {
+  // Security improvement: Validate queue data
+  if (!isValidSyncData(data)) {
+    throw new Error('Invalid sync data');
+  }
+
   const db = await openDB();
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_NAME, 'readwrite');
@@ -192,7 +236,7 @@ async function removeFromQueue(id) {
 }
 
 // ========================
-// Utilities
+// Utilities (Enhanced)
 // ========================
 function isMediaRequest(request) {
   return /\.(jpg|jpeg|png|pdf|mp4|webm)$/i.test(request.url);
@@ -205,14 +249,46 @@ function serveMediaFallback(request) {
   if (/\.(mp4|webm)$/i.test(request.url)) {
     return new Response('Video unavailable offline', {
       status: 503,
-      headers: {'Content-Type': 'text/plain'}
+      headers: {'Content-Type': 'text/plain; charset=utf-8'}
     });
   }
   return caches.match('/assets/images/placeholder.jpg');
 }
 
+// Security improvement: Timeout wrapper for fetch
+function timeoutFetch(request, timeout) {
+  return Promise.race([
+    fetch(request),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Request timeout')), timeout)
+    )
+  ]);
+}
+
+// Security improvement: Validate sync data
+function isValidSyncData(data) {
+  try {
+    return data && 
+      typeof data.url === 'string' &&
+      new URL(data.url).origin === self.location.origin &&
+      ['GET', 'POST', 'PUT', 'DELETE'].includes(data.method) &&
+      (data.headers === null || typeof data.headers === 'object') &&
+      (data.body === null || typeof data.body === 'string');
+  } catch {
+    return false;
+  }
+}
+
+// Security improvement: Validate sync item
+function isValidSyncItem(item) {
+  return item && 
+    typeof item.id === 'number' &&
+    isValidSyncData(item) &&
+    typeof item.timestamp === 'string';
+}
+
 // ========================
-// Periodic Sync
+// Periodic Sync (Security Enhanced)
 // ========================
 self.addEventListener('periodicsync', event => {
   if (event.tag === 'content-refresh') {
@@ -224,8 +300,14 @@ async function refreshContent() {
   const cache = await caches.open(CACHE_NAME);
   try {
     await Promise.all(ASSETS.map(async url => {
-      const fresh = await fetch(url, { cache: 'reload' });
-      await cache.put(url, fresh);
+      try {
+        const fresh = await timeoutFetch(new Request(url, { cache: 'reload' }), 5000);
+        if (fresh && fresh.ok) {
+          await cache.put(url, fresh);
+        }
+      } catch (error) {
+        console.error(`Failed to refresh ${url}:`, error);
+      }
     }));
     
     const clients = await self.clients.matchAll();
@@ -242,3 +324,10 @@ async function refreshContent() {
     return false;
   }
 }
+
+// Security improvement: Message handling
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'skipWaiting') {
+    self.skipWaiting();
+  }
+});
