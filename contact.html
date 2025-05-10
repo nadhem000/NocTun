@@ -42,10 +42,6 @@ h1 {
   cursor: pointer;
   transition: all 0.2s;
 }
-.contact-square:hover {
-  background-color: #eef;
-  transform: translateY(-2px);
-}
 .contact-square img {
   max-width: 80px;
   margin-bottom: 10px;
@@ -65,14 +61,34 @@ h1 {
   </style>
 </head>
 <body>
-  <header class="header" aria-label="Main Navigation">
-    <div class="window" role="button" tabindex="0">Main Page</div>
-    <div class="window" role="button" tabindex="0">Our Members</div>
-    <div class="window" role="button" tabindex="0">Associations</div>
-    <div class="window" role="button" tabindex="0">Chapter Activities</div>
-    <div class="window" role="button" tabindex="0">Contact Us</div>
-    <div class="window" role="button" tabindex="0">Language</div>
-  </header>
+		<header class="header" aria-label="Main Navigation">
+			<!-- Main Page Link -->
+			<div class="window" role="button" tabindex="0" aria-label="Main Page" title="Main Page" data-page="index.html" data-video-key="main_page">
+				<span class="translatable" data-key="main_page">Main Page</span>
+			</div>
+			<!-- Our Members -->
+			<div class="window" role="button" tabindex="0" aria-label="Our Members" data-video-key="our_members" title="Our Members">
+				<span class="translatable" data-key="our_members">Our Members</span>
+			</div>
+			<!-- Associations -->
+			<div class="window" role="button" tabindex="0" aria-label="Associations" data-video-key="associations" title="Associations">
+				<span class="translatable" data-key="associations">Associations</span>
+			</div>
+			<!-- Chapter Activities -->
+			<div class="window" role="button" tabindex="0" aria-label="Chapter Activities" data-video-key="chapter_activities" title="Chapter Activities">
+				<span class="translatable" data-key="chapter_activities">Chapter Activities</span>
+			</div>
+			<!-- Contact Us (linked to contact.html) -->
+			<div class="window" role="button" tabindex="0" aria-label="Contact Us" title="Contact Us" data-page="contact.html" data-video-key="contact_us">
+				<span class="translatable" data-key="contact_us">Contact Us</span>
+				<a href="contact.html" style="color:inherit; text-decoration:none;"></a>
+				<div class="hover-content">Placeholder Video/Images</div>
+			</div>
+			<!-- Language -->
+			<div class="translatable window" role="button" tabindex="0" aria-label="Language" data-key="language" data-video-key="language" title="Change Language">
+				<span class="translatable" data-key="language">Language</span>
+			</div>
+		</header>
   
   <main>
     <h1>Contact Us</h1>
