@@ -343,21 +343,21 @@ navigator.serviceWorker.addEventListener('message', event => {
 // ========================
 // Video links map
 const videoLinks = {
-    "main_page": "https://archive.org/download/BigBuckBunny_328/BigBuckBunny_512kb.mp4",
-    "our_members": "https://archive.org/download/Sintel/sintel-2048-surround.mp4",
-    "associations": "https://archive.org/download/ElephantsDream/ed_1024.mp4",
-    "chapter_activities": "https://archive.org/download/BigBuckBunny_328/BigBuckBunny_512kb.mp4",
-    "contact_us": "https://archive.org/download/Sintel/sintel-2048-surround.mp4",
-    "language": "https://archive.org/download/ElephantsDream/ed_1024.mp4",
-    "library": "https://archive.org/download/ElephantsDream/ed_1024.mp4",
-    "videos": "https://archive.org/download/BigBuckBunny_328/BigBuckBunny_512kb.mp4",
-    "calendar": "https://archive.org/download/Sintel/sintel-2048-surround.mp4",
-  "address": "https://archive.org/download/BigBuckBunny_328/BigBuckBunny_512kb.mp4",
-  "facebook": "https://archive.org/download/Sintel/sintel-2048-surround.mp4",
-  "email": "https://archive.org/download/ElephantsDream/ed_1024.mp4",
-  "phone": "https://archive.org/download/BigBuckBunny_328/BigBuckBunny_512kb.mp4",
-  "twitter": "https://archive.org/download/Sintel/sintel-2048-surround.mp4",
-  "linkedin": "https://archive.org/download/ElephantsDream/ed_1024.mp4"
+    "main_page": "assets/videos/language.mp4",
+    "our_members": "assets/videos/language.mp4",
+    "associations": "assets/videos/language.mp4",
+    "chapter_activities": "assets/videos/language.mp4",
+    "contact_us": "assets/videos/language.mp4",
+    "language": "assets/videos/language.mp4",
+    "library": "assets/videos/language.mp4",
+    "videos": "assets/videos/language.mp4",
+    "calendar": "assets/videos/language.mp4",
+  "address": "assets/videos/language.mp4",
+  "facebook": "assets/videos/language.mp4",
+  "email": "assets/videos/language.mp4",
+  "phone": "assets/videos/language.mp4",
+  "twitter": "assets/videos/language.mp4",
+  "linkedin": "assets/videos/language.mp4"
 };
 
 let tooltipsActive = localStorage.getItem('tooltipsActive');
