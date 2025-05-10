@@ -40,7 +40,8 @@ async function refreshContent() {
 const ASSETS = [
     '/',
     '/index.html',
-    '/offline.html',
+    '/offline.html',,
+    '/contact.html',
     '/styles/main.css',
     '/scripts/main.js',
     '/manifest.json',
