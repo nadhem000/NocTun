@@ -49,6 +49,12 @@ const translations = Object.freeze({
         phone: "Phone",
         twitter: "Twitter",
         linkedin: "LinkedIn",
+    member1_name: "John Doe",
+    member1_address: "123 Main Street, Tunis",
+    member1_mission: "Member Mission: Community Outreach",
+    member2_name: "John Doe",
+    member2_address: "123 Main Street, Tunis",
+    member2_mission: "Member Mission: Community Outreach",
     }),
     ar: Object.freeze({
         main_page: "الصفحة الرئيسية",
@@ -96,6 +102,12 @@ const translations = Object.freeze({
         phone: "الهاتف",
         twitter: "تويتر",
         linkedin: "لينكد إن",
+    member1_name: "جون دو",
+    member1_address: "123 شارع الرئيسي، تونس",
+    member1_mission: "المهمة: التواصل المجتمعي",
+    member2_name: "جون دو",
+    member2_address: "123 شارع الرئيسي، تونس",
+    member2_mission: "المهمة: التواصل المجتمعي",
     })
 });
 
@@ -480,7 +492,9 @@ const videoLinks = {
   "email": "assets/videos/language.mp4",
   "phone": "assets/videos/language.mp4",
   "twitter": "assets/videos/language.mp4",
-  "linkedin": "assets/videos/language.mp4"
+  "linkedin": "assets/videos/language.mp4",
+  member1: "assets/videos/language.mp4",
+  member2: "assets/videos/language.mp4",
 };
 let tooltipsActive = localStorage.getItem('tooltipsActive');
 if (tooltipsActive === null) {

@@ -329,7 +329,6 @@ body[dir="rtl"] .window .hover-content {
 /* ===========================
    Contact Page Specific Styles
 =========================== */
-
 /* Contact grid layout */
 .contact-grid {
   display: grid;
@@ -344,34 +343,89 @@ body[dir="rtl"] .window .hover-content {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   padding: 15px;
-  text-align: center;
   cursor: pointer;
   position: relative;
   transition: all 0.2s;
+  
+  /* Make it flex container for alignment */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* default for LTR */
 }
+
+/* Hover effect */
 .contact-square:hover {
   background-color: #eef;
   transform: translateY(-2px);
 }
+
 /* Icon images inside contact squares */
 .contact-square img {
-  max-width: 80px;
+  max-width: 50px; /* smaller size */
   margin-bottom: 10px;
   border-radius: 8px;
+  /* Remove centering, keep aligned left */
+  align-self: flex-start;
 }
+
 /* Contact type label */
 .contact-type {
   font-weight: bold;
   margin-bottom: 8px;
 }
+
 /* Contact info text */
 .contact-info {
   font-size: 0.9em;
   color: #555;
 }
 
-/* ensure link styles are consistent */
-.header a {
-  color: inherit;
-  text-decoration: none;
+/* RTL support: if parent has class 'rtl', align items right */
+.rtl .contact-square {
+  align-items: flex-end;
+}
+
+.rtl .contact-square img {
+  align-self: flex-end;
+}
+
+  .members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1em;
+  }
+  .member-card {
+  position: relative; /* Make position relative for absolute children */
+  border: 1px solid #ccc;
+  padding: 1em;
+  border-radius: 8px;
+  background: #fff;
+  /* Optional: add some padding to leave space for the photo */
+  padding-top: 2.5em; /* adjust as needed */
+  box-sizing: border-box; /* ensure padding doesn't overflow */
+}
+
+/* Style for the photo to be a small square in the top-left corner */
+.member-photo {
+  position: absolute;
+  top: 8px; /* distance from top of the card */
+  left: 8px; /* distance from left of the card */
+  width: 60px; /* size of the small square */
+  height: 60px;
+  border-radius: 4px; /* optional: rounded corners */
+  object-fit: cover; /* ensure the image covers the square nicely */
+  border: 2px solid #ccc; /* optional: border around the photo */
+  background-color: #eee; /* fallback background if image isn't loaded */
+  z-index: 1; /* ensure it's above other content if needed */
+}
+
+/* Adjust the content to avoid overlapping with the photo */
+.member-name,
+.member-address,
+.member-mission {
+  margin-left: 70px; /* leave space for the photo */
+}
+.members-grid:hover {
+  background-color: #eef;
+  transform: translateY(-2px);
 }

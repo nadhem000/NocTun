@@ -11,6 +11,7 @@ const ASSETS = [
   '/index.html',
   '/offline.html',
   '/contact.html',
+  '/our_members.html',
   '/styles/main.css',
   '/scripts/main.js',
   '/manifest.json',

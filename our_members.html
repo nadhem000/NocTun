@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self' 'unsafe-inline'">
+		<title>Our Members - NOC Tunisian Chapter</title>
+		<link rel="stylesheet" href="styles/main.css" />
+		<link rel="manifest" href="manifest.json" />
+	</head>
+	<body>
+		
+		
+		<header class="header" aria-label="Main Navigation">
+			<!-- Main Page Link -->
+			<div class="window" role="button" tabindex="0" aria-label="Main Page" title="Main Page" data-page="index.html" data-video-key="main_page">
+				<span class="translatable" data-key="main_page">Main Page</span>
+			</div>
+			<!-- Our Members -->
+			<div class="window" role="button" tabindex="0" aria-label="Our Members" data-video-key="our_members" title="Our Members" data-page="our_members.html" data-video-key="our_members">
+				<span class="translatable" data-key="our_members">Our Members</span>
+			</div>
+			<!-- Associations -->
+			<div class="window" role="button" tabindex="0" aria-label="Associations" data-video-key="associations" title="Associations">
+				<span class="translatable" data-key="associations">Associations</span>
+			</div>
+			<!-- Chapter Activities -->
+			<div class="window" role="button" tabindex="0" aria-label="Chapter Activities" data-video-key="chapter_activities" title="Chapter Activities">
+				<span class="translatable" data-key="chapter_activities">Chapter Activities</span>
+			</div>
+			<!-- Contact Us (linked to contact.html) -->
+			<div class="window" role="button" tabindex="0" aria-label="Contact Us" title="Contact Us" data-page="contact.html" data-video-key="contact_us">
+				<span class="translatable" data-key="contact_us">Contact Us</span>
+				<a href="contact.html" style="color:inherit; text-decoration:none;"></a>
+				<div class="hover-content">Placeholder Video/Images</div>
+			</div>
+			<!-- Language -->
+			<div class="translatable window" role="button" tabindex="0" aria-label="Language" data-key="language" data-video-key="language" title="Change Language">
+				<span class="translatable" data-key="language">Language</span>
+				<div class="hover-content">Placeholder Video/Images</div>
+			</div>
+		</header>
+		
+		<main>
+			<h1 class="translatable" data-key="our_members">Our Members</h1>
+			<div class="members-grid">
+				<!-- Member Card Example -->
+				<div class="member-card window" role="button" tabindex="0" aria-label="Member1" data-video-key="member1" title="Member Info">
+					<img src="assets/icons/video-icon-256x256.png" alt="Member1 Photo" class="member-photo" />
+					<h2 class="member-name translatable" data-key="member1_name">Member Name</h2>
+					<div class="hover-content">Placeholder Video/Images</div>
+					<p class="member-card translatable" data-key="member1_address">Member Address</p>
+					<p class="member-mission translatable" data-key="member1_mission">Member Mission</p>
+				</div>
+				<div class="member-card window" role="button" tabindex="0" aria-label="Member2" data-video-key="member2" title="Member Info">
+					<img src="assets/icons/video-icon-256x256.png" alt="Member2 Photo" class="member-photo" />
+					<h2 class="member-name translatable" data-key="member2_name">Member Name</h2>
+					<div class="hover-content">Placeholder Video/Images</div>
+					<p class="member-card translatable" data-key="member2_address">Member Address</p>
+					<p class="member-mission translatable" data-key="member2_mission">Member Mission</p>
+				</div>
+			</div>
+		</main>
+		
+		<!-- =========================
+			Middle Windows - Library, Videos, Calendar
+		=========================== -->
+		<section class="middle-windows" aria-label="Content Sections">
+			<div class="window" role="button" tabindex="0" aria-label="Library" data-video-key="library" title="Library">
+				<span class="translatable" data-key="library">Library</span>
+				<div class="hover-content">Placeholder Video/Images</div>
+			</div>
+			<div class="window" role="button" tabindex="0" aria-label="Videos" data-video-key="videos" title="Videos">
+				<span class="translatable" data-key="videos">Videos</span>
+				<div class="hover-content">Placeholder Video/Images</div>
+			</div>
+			<div class="window" role="button" tabindex="0" aria-label="Calendar" data-video-key="calendar" title="Calendar">
+				<span class="translatable" data-key="calendar">Calendar</span>
+				<div class="hover-content">Placeholder Video/Images</div>
+			</div>
+		</section>
+		
+		<!-- Install Button & Modal -->
+		<button id="stopTooltipsButton" class="translatable" data-key="stop_tooltips">Deactivate Tooltips</button>
+		<button id="installButton" class="translatable" data-key="install_app" style="display: none;">Install App</button>
+		
+		<button id="install-instructions-title" class="translatable" data-key="install-instructions-title" style="display: inline-block;">Install Instructions</button>
+		<!-- <div class="install-instructions" 
+			style="display: none;" 
+			role="dialog" 
+			aria-modal="true" 
+			aria-labelledby="install-instructions-title" 
+			aria-describedby="install-instructions-text">
+			<button aria-label="Close" class="close-instructions">×</button>
+			<h3 id="install-instructions-title" class="translatable" data-key="install_instructions_title">Install Instructions</h3>
+			<p id="install-instructions-text" class="translatable" data-key="install_instructions_text">
+			To install this app, tap the share icon and select "Add to Home Screen."
+			</p>
+		</div> -->
+		
+		<!-- Footer -->
+		<footer class="footer">
+			<p class="translatable" data-key="developer">Developer: Mejri Ziad</p>
+			<p class="translatable" data-key="version">Version: 1.0</p>
+		</footer>
+		
+		<script src="scripts/main.js"></script>
+	</body>
+</html>
